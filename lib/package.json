@@ -7,5 +7,7 @@
     "#root/*": "./src/*.js"
   },
   "type": "module",
-  "dependencies": {}
+  "dependencies": {
+    "print-tree": "^0.1.5"
+  }
 }
