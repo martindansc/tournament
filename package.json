@@ -3,6 +3,7 @@
   "version": "1.0.0",
   "description": "",
   "main": "lib/src/index.js",
+  "types": "lib/src/types/types.d.ts",
   "author": "martindansc",
   "license": "MIT"
 }

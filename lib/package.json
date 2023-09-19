@@ -7,7 +7,9 @@
     "#root/*": "./src/*.js"
   },
   "type": "module",
+  "types": "./src/types/types.d.ts",
   "dependencies": {
     "print-tree": "^0.1.5"
-  }
+  },
+  "devDependencies": {}
 }
