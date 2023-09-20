@@ -33,6 +33,13 @@ async function run() {
         let next_stage = t.getNextStage();
         let [p1, p2] = await playStage(next_stage);
         t.addResultPoints(next_stage.num, p1, p2);
+        if (t.bracket.stages[next_stage.num].player_1_score !== p1) {
+            console.error("Should be assigned");
+        };
+        if (t.bracket.stages[next_stage.num].player_2_score !== p2) {
+            console.error("Should be assigned");
+        };
+
     }
 
     t.bracket.consolePrint();

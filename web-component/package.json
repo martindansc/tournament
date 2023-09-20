@@ -13,9 +13,7 @@
   "author": "Elk",
   "license": "MIT",
   "dependencies": {
-    "@deckdeckgo/excalidraw": "^1.2.0",
     "@elk/tournament": "file:../lib",
-    "@excalidraw/excalidraw": "^0.16.0",
     "lit": "^2.2.4"
   },
   "devDependencies": {
