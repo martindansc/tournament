@@ -1,0 +1,7 @@
+{
+    "name": "@elk/tournament",
+    "version": "1.0.0",
+    "main": "bundle.js",
+    "dependencies": {},
+    "devDependencies": {}
+}
