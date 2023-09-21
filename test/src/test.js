@@ -17,7 +17,7 @@ async function run() {
     let players = [];
 
     for (let i = 0; i < n_players; i++) {
-        players.push("Player_" + i.toString());
+        players.push({ name: "Player_" + i.toString(), id: i });
     }
 
     const t = new Tournament();
