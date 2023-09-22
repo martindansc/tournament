@@ -29,6 +29,10 @@ async function run() {
     t.bracket.consolePrint();
     t.bracket.validate();
 
+    let maps = [...Array(26).keys()].map(i => String.fromCharCode(i + 97));
+
+    t.assignUniqueToColumnStages("maps", maps, 3);
+
     while (t.hasNextStage()) {
         let next_stage = t.getNextStage();
         let [p1, p2] = await playStage(next_stage);
