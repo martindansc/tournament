@@ -1,6 +1,6 @@
 {
   "name": "@elk/tournament",
-  "version": "1.0.4",
+  "version": "1.0.6",
   "main": "./lib/src/index.js",
   "type": "module",
   "exports": {
