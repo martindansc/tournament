@@ -4,7 +4,7 @@
   "main": "./lib/src/index.js",
   "type": "module",
   "exports": {
-    "import": "./lib/src/build/es/bundle.js",
+    "import": "./lib/build/es/bundle.js",
     "require": "./lib/build/cjs/bundle.cjs"
   }
 }
