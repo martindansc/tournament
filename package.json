@@ -1,7 +1,7 @@
 {
   "name": "@elk/tournament",
-  "version": "1.0.10",
-  "main": "./lib/src/index.js",
+  "version": "1.0.11",
+  "main": "./lib/build/es/bundle.js",
   "type": "module",
   "exports": {
     "import": "./lib/build/es/bundle.js",
