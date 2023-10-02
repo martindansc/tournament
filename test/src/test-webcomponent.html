@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+
+<html>
+
+<head>
+    <meta charset="utf-8" />
+    <title>&lt;tournament-viewer> Test both components</title>
+    <script src="./static/bundle.js"></script>
+    <script type="module" src="./static/tournament-viewer.bundled.js"></script>
+</head>
+
+<body>
+    <tournament-viewer id="tournament-viewer"></tournament-viewer>
+</body>
+
+<script>
+    let n_players = 30;
+    let players = [];
+
+    for (let i = 0; i < n_players; i++) {
+        players.push("Player_" + i.toString());
+    }
+
+    const t = new tournament.Tournament();
+    t.create(players);
+    t.addResultPoints(4, 2, 1);
+
+    console.log(t);
+
+    window.addEventListener('WebComponentsReady', () => {
+        const tv = document.getElementById("tournament-viewer");
+        console.log(tv);
+        tv.setTournament(t);
+    });
+
+
+</script>
+
+</html>

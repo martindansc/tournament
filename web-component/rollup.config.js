@@ -12,7 +12,7 @@ import replace from '@rollup/plugin-replace';
 export default {
   input: 'tournament-viewer.js',
   output: {
-    file: 'tournament-viewer.bundled.js',
+    file: './build/tournament-viewer.bundled.js',
     format: 'esm',
   },
   onwarn(warning) {

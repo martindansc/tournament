@@ -6,7 +6,7 @@
   "module": "my-element.js",
   "type": "module",
   "scripts": {
-    "build": "echo \"This is not a TypeScript project, so no need to build.\"",
+    "build": "rollup -c",
     "serve": "wds --watch",
     "serve:prod": "MODE=prod npm run serve"
   },
