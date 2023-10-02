@@ -13,7 +13,7 @@ export default {
   input: 'tournament-viewer.js',
   output: {
     file: './build/tournament-viewer.bundled.js',
-    format: 'esm',
+    format: 'es',
   },
   onwarn(warning) {
     if (warning.code !== 'THIS_IS_UNDEFINED') {
