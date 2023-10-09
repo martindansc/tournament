@@ -14,11 +14,13 @@
     "require": "./build/cjs/bundle.cjs"
   },
   "types": "./src/types/types.d.ts",
-  "dependencies": {},
+  "dependencies": {
+    "@babel/core": "^7.23.0"
+  },
   "devDependencies": {
     "@babel/plugin-transform-class-properties": "^7.22.5",
-    "@rollup/plugin-babel": "^6.0.3",
-    "@rollup/plugin-node-resolve": "^15.2.1",
+    "@rollup/plugin-babel": "^6.0.4",
+    "@rollup/plugin-node-resolve": "^15.2.3",
     "rollup": "^3.29.2"
   }
 }
