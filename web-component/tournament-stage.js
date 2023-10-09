@@ -8,6 +8,7 @@ export class TournamentStage extends LitElement {
             .stage-players {
                 border: 1px solid black;
                 border-radius: 10px;
+                cursor: pointer;
             }
 
             .p-name {
@@ -95,6 +96,13 @@ export class TournamentStage extends LitElement {
                 height: 1px;
                 border: 1px sold black;
             }
+
+            .next-stage-button {
+                display: flex;
+                align-items: center;
+                padding: 5px;
+                cursor: pointer;
+            }
         `];
     }
 
@@ -104,7 +112,7 @@ export class TournamentStage extends LitElement {
              * 
              * @type {Stage}
              */
-            stage: { type: Stage },
+            stage: { type: Object },
         };
     }
 
@@ -113,6 +121,16 @@ export class TournamentStage extends LitElement {
     }
 
     render() {
+        console.log(this.stage);
+
+        if (typeof this.stage.hasPlayers !== 'function') {
+            let new_stage = new Stage();
+            Object.assign(new_stage, this.stage);
+            this.stage = new_stage;
+        }
+
+        console.log(this.stage);
+
         let has_bye = this._getIsBye(this.stage.player_1) || this._getIsBye(this.stage.player_2);
 
         let player_1_color = 'grey';
@@ -135,7 +153,7 @@ export class TournamentStage extends LitElement {
 
         return html`
             <div class="t-row ${has_bye ? '' : ''}">
-                <div class="stage-players t-column">
+                <div class="stage-players t-column" @click="${e => this._onClick("view-stage")}">
                     <div class="t-row p-row">
                         <div class="p-color-band p-color-band-top p-${player_1_color}"></div>
                         <div class="p-name">${this._getName(this.stage.player_1)}</div>
@@ -147,15 +165,37 @@ export class TournamentStage extends LitElement {
                         <div class="p-score pt-${player_2_color}">${this.stage.player_2_score}</div>
                     </div>
                 </div>
+                ${this.stage.hasNext() ? this._printNextStage() : ``}
                 <div class="arrow-parent">
                     <div class="back-line" style="">
                 </div>
-                </duv>
             </div>
         `;
     }
 
-    _onClick() {
+    _printNextStage() {
+        return html`
+            <div class="next-stage-button" @click="${e => this._onClick("next-stage")}">
+                >
+            </div>`;
+    }
+
+    _onClick(where) {
+        if (!this.stage.hasPlayers()) return;
+
+        let e = new CustomEvent('stage-clicked', {
+            bubbles: true,
+            composed: true,
+            detail: {
+                position: where,
+                stage: this.stage.id
+            }
+
+        });
+
+        console.log(e);
+
+        this.dispatchEvent(e);
     }
 
     _getName(value) {

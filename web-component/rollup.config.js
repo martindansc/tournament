@@ -9,34 +9,67 @@ import { terser } from 'rollup-plugin-terser';
 import resolve from '@rollup/plugin-node-resolve';
 import replace from '@rollup/plugin-replace';
 
-export default {
-  input: 'tournament-viewer.js',
-  output: {
-    file: './build/tournament-viewer.bundled.js',
-    format: 'es',
-  },
-  onwarn(warning) {
-    if (warning.code !== 'THIS_IS_UNDEFINED') {
-      console.error(`(!) ${warning.message}`);
-    }
-  },
-  plugins: [
-    replace({ 'Reflect.decorate': 'undefined' }),
-    resolve(),
-    /**
-     * This minification setup serves the static site generation.
-     * For bundling and minification, check the README.md file.
-     */
-    terser({
-      ecma: 2017,
-      module: true,
-      warnings: true,
-      mangle: {
-        properties: {
-          regex: /^__/,
+export default [
+  {
+    input: 'tournament-viewer.js',
+    output: {
+      file: './build/tournament-viewer.bundled.js',
+      format: 'esm',
+    },
+    onwarn(warning) {
+      if (warning.code !== 'THIS_IS_UNDEFINED') {
+        console.error(`(!) ${warning.message}`);
+      }
+    },
+    plugins: [
+      replace({ 'Reflect.decorate': 'undefined' }),
+      resolve(),
+      /**
+       * This minification setup serves the static site generation.
+       * For bundling and minification, check the README.md file.
+       */
+      terser({
+        ecma: 2017,
+        module: true,
+        warnings: true,
+        mangle: {
+          properties: {
+            regex: /^__/,
+          },
         },
-      },
-    }),
-    summary(),
-  ],
-};
+      }),
+      summary(),
+    ],
+  },
+  {
+    input: 'tournament-stage.js',
+    output: {
+      file: './build/tournament-stage.bundled.js',
+      format: 'esm',
+    },
+    onwarn(warning) {
+      if (warning.code !== 'THIS_IS_UNDEFINED') {
+        console.error(`(!) ${warning.message}`);
+      }
+    },
+    plugins: [
+      replace({ 'Reflect.decorate': 'undefined' }),
+      resolve(),
+      /**
+       * This minification setup serves the static site generation.
+       * For bundling and minification, check the README.md file.
+       */
+      terser({
+        ecma: 2017,
+        module: true,
+        warnings: true,
+        mangle: {
+          properties: {
+            regex: /^__/,
+          },
+        },
+      }),
+      summary(),
+    ],
+  },
+];

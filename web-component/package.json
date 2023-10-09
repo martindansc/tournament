@@ -14,6 +14,7 @@
   "license": "MIT",
   "dependencies": {
     "@elk/tournament": "file:../lib",
+    "@rollup/plugin-babel": "^6.0.3",
     "lit": "^2.2.4"
   },
   "devDependencies": {

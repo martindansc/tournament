@@ -22,7 +22,9 @@ export class TournamentViewer extends LitElement {
        * 
        * @type {Tournament}
        */
-      tournament: { type: Tournament },
+      t: { type: Object },
+      tname: { type: String },
+      counter: { type: Number }
     };
   }
 
@@ -58,6 +60,7 @@ export class TournamentViewer extends LitElement {
   }
 
   setTournament(tournament) {
+    console.log("Tournament data updated", tournament);
     this.t = tournament;
     this.requestUpdate();
   }
@@ -67,7 +70,10 @@ export class TournamentViewer extends LitElement {
   }
 
   render() {
-    if (!this.t) return html``;
+    console.log(this.tname);
+    console.log(this.t);
+
+    if (!this.t) return html`No data`;
 
     let bracket = this.t.bracket;
     let html_s = html`<div class="t-row gap-5">${this._print_columns(bracket)}</div>`;

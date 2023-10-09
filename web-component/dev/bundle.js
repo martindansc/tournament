@@ -118,16 +118,8 @@ var tournament = (function (exports) {
             this.extra_info = {};
         }
 
-        hasPreviousUp() {
-            return this.previous_up !== null;
-        }
-
-        hasPreviousDown() {
-            return this.previous_down !== null;
-        }
-
         hasPrevious() {
-            return this.previous_up !== null && this.previous_down !== null;
+            return this.previous_up !== null;
         }
 
         hasNext() {

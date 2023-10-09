@@ -20,15 +20,23 @@
   let players = [];
 
   for (let i = 0; i < n_players; i++) {
-    players.push("Player_" + i.toString());
+    players.push({ name: "Player_" + i.toString() });
   }
 
   const t = new tournament.Tournament();
   t.create(players);
   t.addResultPoints(4, 2, 1);
 
+  const tv = document.getElementById("tournament-viewer");
+
   window.addEventListener('WebComponentsReady', () => {
-    const tv = document.getElementById("tournament-viewer");
+    console.log(t);
+
+    tv.setTournament(t);
+  });
+
+  tv.addEventListener("stage-clicked", function (ev) {
+    t.addResultPoints(ev.detail.stage, 2, 1);
     tv.setTournament(t);
   });
 
