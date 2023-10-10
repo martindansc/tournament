@@ -164,7 +164,7 @@ export class TournamentStage extends LitElement {
                         <div class="p-score pt-${player_2_color}">${this.stage.player_2_score}</div>
                     </div>
                 </div>
-                ${this.stage.hasNext() ? this._printNextStage() : ``}
+                ${this._printNextStage()}
                 <div class="arrow-parent">
                     <div class="back-line" style="">
                 </div>

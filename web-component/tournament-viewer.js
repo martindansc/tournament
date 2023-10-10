@@ -75,7 +75,7 @@ export class TournamentViewer extends LitElement {
     </div>`);
     if (this.t.looser_bracket != null) {
       html_s.push(html`
-      <div class="bracket-title">Looser bracket</div>
+      <div class="bracket-title">Loser bracket</div>
       <div class="t-row gap-5">${this._print_columns(this.t.looser_bracket)}
       </div>`);
     }
