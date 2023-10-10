@@ -20,7 +20,7 @@ var b;g[f]=!0,g.elementProperties=new Map,g.elementStyles=[],g.shadowRootOptions
  * Copyright 2017 Google LLC
  * SPDX-License-Identifier: BSD-3-Clause
  */
-var it,st;class et extends g{constructor(){super(...arguments),this.renderOptions={host:this},this._$Do=void 0}createRenderRoot(){var t,i;const s=super.createRenderRoot();return null!==(t=(i=this.renderOptions).renderBefore)&&void 0!==t||(i.renderBefore=s.firstChild),s}update(t){const i=this.render();this.hasUpdated||(this.renderOptions.isConnected=this.isConnected),super.update(t),this._$Do=((t,i,s)=>{var e,o;const n=null!==(e=null==s?void 0:s.renderBefore)&&void 0!==e?e:i;let r=n._$litPart$;if(void 0===r){const t=null!==(o=null==s?void 0:s.renderBefore)&&void 0!==o?o:null;n._$litPart$=r=new K(i.insertBefore(A(),t),t,void 0,null!=s?s:{})}return r._$AI(t),r})(i,this.renderRoot,this.renderOptions)}connectedCallback(){var t;super.connectedCallback(),null===(t=this._$Do)||void 0===t||t.setConnected(!0)}disconnectedCallback(){var t;super.disconnectedCallback(),null===(t=this._$Do)||void 0===t||t.setConnected(!1)}render(){return I}}et.finalized=!0,et._$litElement$=!0,null===(it=globalThis.litElementHydrateSupport)||void 0===it||it.call(globalThis,{LitElement:et});const ot=globalThis.litElementPolyfillSupport;null==ot||ot({LitElement:et}),(null!==(st=globalThis.litElementVersions)&&void 0!==st?st:globalThis.litElementVersions=[]).push("3.3.3");const nt=0,rt=1,lt=2;class ht{num;id;player_1;player_2;player_1_score;player_2_score;result;next_winner;next_looser;previous_up;previous_down;column;extra_info;constructor(t,i,s=null){this.num=t,null==s&&(s=t),this.column=i,this.id=s,this.player_1=null,this.player_2=null,this.player_1_score=0,this.player_2_score=0,this.result=nt,this.next_winner=null,this.next_looser=null,this.previous_up=null,this.previous_down=null,this.extra_info={}}hasPreviousUp(){return null!==this.previous_up}hasPreviousDown(){return null!==this.previous_down}hasPrevious(){return null!==this.previous_up&&null!==this.previous_down}hasNext(){return null!==this.next_winner}hasPlayers(){return null!==this.player_1&&null!==this.player_2}}class dt extends et{static get styles(){return[n`
+var it,st;class et extends g{constructor(){super(...arguments),this.renderOptions={host:this},this._$Do=void 0}createRenderRoot(){var t,i;const s=super.createRenderRoot();return null!==(t=(i=this.renderOptions).renderBefore)&&void 0!==t||(i.renderBefore=s.firstChild),s}update(t){const i=this.render();this.hasUpdated||(this.renderOptions.isConnected=this.isConnected),super.update(t),this._$Do=((t,i,s)=>{var e,o;const n=null!==(e=null==s?void 0:s.renderBefore)&&void 0!==e?e:i;let r=n._$litPart$;if(void 0===r){const t=null!==(o=null==s?void 0:s.renderBefore)&&void 0!==o?o:null;n._$litPart$=r=new K(i.insertBefore(A(),t),t,void 0,null!=s?s:{})}return r._$AI(t),r})(i,this.renderRoot,this.renderOptions)}connectedCallback(){var t;super.connectedCallback(),null===(t=this._$Do)||void 0===t||t.setConnected(!0)}disconnectedCallback(){var t;super.disconnectedCallback(),null===(t=this._$Do)||void 0===t||t.setConnected(!1)}render(){return I}}et.finalized=!0,et._$litElement$=!0,null===(it=globalThis.litElementHydrateSupport)||void 0===it||it.call(globalThis,{LitElement:et});const ot=globalThis.litElementPolyfillSupport;null==ot||ot({LitElement:et}),(null!==(st=globalThis.litElementVersions)&&void 0!==st?st:globalThis.litElementVersions=[]).push("3.3.3");const nt=0,rt=1,lt=2;class ht{num;id;player_1;player_2;player_1_score;player_2_score;result;next_winner;next_looser;previous_up;previous_down;column;extra_info;constructor(t,i,s=null){this.num=t,null==s&&(s=t),this.column=i,this.id=s,this.player_1=null,this.player_2=null,this.player_1_score=0,this.player_2_score=0,this.result=nt,this.next_winner=null,this.next_looser=null,this.previous_up=null,this.previous_down=null,this.extra_info={}}hasPreviousUp(){return null!==this.previous_up}hasPreviousDown(){return null!==this.previous_down}hasPrevious(){return null!==this.previous_up&&null!==this.previous_down}hasNext(){return null!==this.next_winner}hasPlayers(){return this.player_1&&this.player_2}}class dt extends et{static get styles(){return[n`
         .t-row {
             display: flex;
             flex-direction: row;
@@ -137,18 +137,18 @@ var it,st;class et extends g{constructor(){super(...arguments),this.renderOption
                 padding: 5px;
                 cursor: pointer;
             }
-        `]}static get properties(){return{stage:{type:Object}}}constructor(){super()}render(){if(console.log(this.stage),"function"!=typeof this.stage.hasPlayers){let t=new ht;Object.assign(t,this.stage),this.stage=t}console.log(this.stage);this._getIsBye(this.stage.player_1)||this._getIsBye(this.stage.player_2);let t="grey",i="grey";return this.stage.hasPlayers()&&(t="blue",i="blue"),this.stage.result==rt&&(t="green",i="red"),this.stage.result==lt&&(t="grey",i="red"),z`
-            <div class="t-row ${""}">
+        `]}static get properties(){return{stage:{type:Object}}}constructor(){super()}render(){if("function"!=typeof this.stage.hasPlayers){let t=new ht;Object.assign(t,this.stage),this.stage=t}console.log(this.stage);let t=this._getIsBye(this.stage.player_1)||this._getIsBye(this.stage.player_2),i="grey",s="grey";return this.stage.hasPlayers()&&(i="blue",s="blue"),this.stage.result==rt&&(i="green",s="red"),this.stage.result==lt&&(i="red",s="green"),z`
+            <div class="t-row ${t?"t-hide":""}">
                 <div class="stage-players t-column" @click="${t=>this._onClick("view-stage")}">
                     <div class="t-row p-row">
-                        <div class="p-color-band p-color-band-top p-${t}"></div>
+                        <div class="p-color-band p-color-band-top p-${i}"></div>
                         <div class="p-name">${this._getName(this.stage.player_1)}</div>
-                        <div class="p-score pt-${t}">${this.stage.player_1_score}</div>
+                        <div class="p-score pt-${i}">${this.stage.player_1_score}</div>
                     </div>
                     <div class="t-row p-row">
-                        <div class="p-color-band p-color-band-bottom p-${i}"></div>
+                        <div class="p-color-band p-color-band-bottom p-${s}"></div>
                         <div class="p-name">${this._getName(this.stage.player_2)}</div>
-                        <div class="p-score pt-${i}">${this.stage.player_2_score}</div>
+                        <div class="p-score pt-${s}">${this.stage.player_2_score}</div>
                     </div>
                 </div>
                 ${this.stage.hasNext()?this._printNextStage():""}
@@ -159,4 +159,4 @@ var it,st;class et extends g{constructor(){super(...arguments),this.renderOption
         `}_printNextStage(){return z`
             <div class="next-stage-button" @click="${t=>this._onClick("next-stage")}">
                 >
-            </div>`}_onClick(t){if(!this.stage.hasPlayers())return;let i=new CustomEvent("stage-clicked",{bubbles:!0,composed:!0,detail:{position:t,stage:this.stage.id}});console.log(i),this.dispatchEvent(i)}_getName(t){return null!==t?t.name:""}_getIsBye(t){return null!==t&&t.is_bye}}window.customElements.define("tournament-stage",dt);export{dt as TournamentStage};
+            </div>`}_onClick(t){if(!this.stage.hasPlayers())return;let i=new CustomEvent("stage-clicked",{bubbles:!0,composed:!0,detail:{position:t,stage:this.stage.id}});console.log(i),this.dispatchEvent(i)}_getName(t){return t?t.name:""}_getIsBye(t){return!!t&&t.is_bye}}window.customElements.define("tournament-stage",dt);export{dt as TournamentStage};

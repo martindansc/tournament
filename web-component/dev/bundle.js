@@ -102,7 +102,7 @@ var tournament = (function (exports) {
         }
 
         hasPlayers() {
-            return this.player_1 !== null && this.player_2 !== null;
+            return this.player_1 && this.player_2;
         }
 
     }
@@ -387,29 +387,30 @@ var tournament = (function (exports) {
         }
 
         _updateFirstNonExecutedStage() {
+            let assigned = false;
             for (let stage of this.stages) {
                 if (stage.result == Result.Unfinished) {
 
-                    if (stage.player_2.is_bye) {
+                    if (stage.player_2 && stage.player_2.is_bye) {
                         this.addResultVictory(stage.num, Result.WinPlayer1);
                         continue;
                     }
 
-                    if (stage.player_1.is_bye) {
+                    if (stage.player_1 && stage.player_1.is_bye) {
                         this.addResultVictory(stage.num, Result.WinPlayer2);
                         continue;
                     }
 
-                    this.first_non_executed_stage = stage.num;
-                    if (!stage.hasPlayers()) {
-                        console.error("First non executed stage should have players");
+                    if (!assigned) {
+                        assigned = true;
+                        this.first_non_executed_stage = stage.num;
                     }
-
-                    return;
                 }
             }
 
-            this.finished = true;
+            if (!assigned) {
+                this.finished = true;
+            }
         }
 
         getNextStage() {
@@ -462,16 +463,12 @@ var tournament = (function (exports) {
         }
 
         getLooserPlayers() {
-            if (!this.finished) {
-                throw Error("Should be finished");
-            }
-
             let loosers = [];
             for (let stage of this.stages) {
                 if (stage.result == Result.WinPlayer1) {
                     loosers.push(stage.player_2);
                 }
-                else {
+                else if (stage.result == Result.WinPlayer2) {
                     loosers.push(stage.player_1);
                 }
             }
@@ -513,15 +510,13 @@ var tournament = (function (exports) {
         /** @type {number} */
         stage_initial_num;
 
-        constructor(players, stage_initial_num) {
-            this.players = players;
-            this.n_players = players.length;
+        constructor(n_players, stage_initial_num) {
+            this.n_players = n_players;
             this.stage_initial_num = stage_initial_num;
             this.n_stages = this.n_players - 1;
             this.stages_columns_number = duplicateArrayNumbers(multiplesOf2until(this.n_stages / 2));
             this.first_non_executed_stage = 0;
             this._createStages();
-            this._assignPlayers();
             this._updateFirstNonExecutedStage();
         }
 
@@ -586,7 +581,9 @@ var tournament = (function (exports) {
             return current_player_index;
         }
 
-        _assignPlayers() {
+        _assignPlayers(players) {
+            this.players = players;
+
             let current_player_index = 0;
 
             current_player_index = this._assignPlayersOrdered(this.per_column_stage[0], current_player_index, true, true);
@@ -680,29 +677,30 @@ var tournament = (function (exports) {
         }
 
         _updateFirstNonExecutedStage() {
+            let assigned = false;
             for (let stage of this.stages) {
                 if (stage.result == Result.Unfinished) {
 
-                    if (stage.player_2?.is_bye) {
+                    if (stage.player_2 && stage.player_2.is_bye) {
                         this.addResultVictory(stage.num, Result.WinPlayer1);
                         continue;
                     }
 
-                    if (stage.player_1?.is_bye) {
+                    if (stage.player_1 && stage.player_1.is_bye) {
                         this.addResultVictory(stage.num, Result.WinPlayer2);
                         continue;
                     }
 
-                    this.first_non_executed_stage = stage.num;
-                    if (!stage.hasPlayers()) {
-                        console.error("First non executed stage should have players");
+                    if (!assigned) {
+                        assigned = true;
+                        this.first_non_executed_stage = stage.num;
                     }
-
-                    return;
                 }
             }
 
-            this.finished = true;
+            if (!assigned) {
+                this.finished = true;
+            }
         }
 
         getNextStage() {
@@ -810,10 +808,8 @@ var tournament = (function (exports) {
 
         /** @param{Stage} current_stage @param{Player[]} current_players*/
         _assignPlayers() {
-            for (let stage of this.stages) {
-                stage.player_1 = this.players[0];
-                stage.player_2 = this.players[1];
-            }
+            this.stages[0].player_1 = this.players[0];
+            this.stages[0].player_2 = this.players[1];
         }
 
         /** @param{string} name @param{Array} list @param{number} number*/
@@ -874,6 +870,10 @@ var tournament = (function (exports) {
             for (let stage of this.stages) {
                 if (stage.result == Result.WinPlayer1) {
                     this.finished = true;
+                }
+                else if (stage.result == Result.WinPlayer2) {
+                    this.stages[1].player_1 = this.players[0];
+                    this.stages[1].player_2 = this.players[1];
                 }
 
                 if (stage.result == Result.Unfinished) {
@@ -962,13 +962,17 @@ var tournament = (function (exports) {
         }
 
         _createNextBracketIfNeeded() {
-            if (this.bracket.finished && this.has_looser_bracket && this.looser_bracket == null) {
-                let looser_players = this.bracket.getLooserPlayers();
-                this.looser_bracket = new LooserBracket(looser_players, this.bracket.n_stages);
+            if (this.has_looser_bracket && this.looser_bracket == null) {
+                this.looser_bracket = new LooserBracket(this.bracket.n_players - 1, this.bracket.n_stages);
                 for (let assign of this.assignations) {
                     assign.list.splice(0, assign.number);
                     this.looser_bracket.assignUniqueToColumnStages(assign.name, assign.list, assign.number);
                 }
+            }
+
+            if (this.has_looser_bracket) {
+                let looser_players = this.bracket.getLooserPlayers();
+                this.looser_bracket._assignPlayers(looser_players);
             }
 
             if (this.looser_bracket != null && this.looser_bracket.finished && this.final_bracket == null) {
@@ -993,6 +997,8 @@ var tournament = (function (exports) {
             for (let assign of this.assignations) {
                 this.bracket.assignUniqueToColumnStages(assign.name, assign.list, assign.number);
             }
+
+            this._createNextBracketIfNeeded();
         }
 
         assignUniqueToColumnStages(name, list, number) {
@@ -1070,6 +1076,21 @@ var tournament = (function (exports) {
             this.final_bracket.addResultPoints(stage_num, points_player_1, points_player_2);
 
             this._createNextBracketIfNeeded();
+        }
+
+        getStage(stage_id) {
+            let stage_num = stage_id;
+            if (stage_id < this.bracket.n_stages) {
+                return this.bracket[stage_id];
+            }
+
+            stage_num -= this.bracket.n_stages;
+
+            if (stage_num < this.looser_bracket.n_stages) {
+                return this.looser_bracket[stage_id];
+            }
+
+            return this.final_bracket[stage_id];
         }
     }
 

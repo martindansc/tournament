@@ -121,7 +121,6 @@ export class TournamentStage extends LitElement {
     }
 
     render() {
-        console.log(this.stage);
 
         if (typeof this.stage.hasPlayers !== 'function') {
             let new_stage = new Stage();
@@ -147,12 +146,12 @@ export class TournamentStage extends LitElement {
         }
 
         if (this.stage.result == Result.WinPlayer2) {
-            player_1_color = 'grey';
-            player_2_color = 'red';
+            player_1_color = 'red';
+            player_2_color = 'green';
         }
 
         return html`
-            <div class="t-row ${has_bye ? '' : ''}">
+            <div class="t-row ${has_bye ? 't-hide' : ''}">
                 <div class="stage-players t-column" @click="${e => this._onClick("view-stage")}">
                     <div class="t-row p-row">
                         <div class="p-color-band p-color-band-top p-${player_1_color}"></div>
@@ -199,14 +198,14 @@ export class TournamentStage extends LitElement {
     }
 
     _getName(value) {
-        if (value !== null) {
+        if (value) {
             return value.name;
         }
 
         return '';
     }
     _getIsBye(value) {
-        if (value !== null) {
+        if (value) {
             return value.is_bye;
         }
 

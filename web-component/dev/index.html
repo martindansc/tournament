@@ -16,6 +16,13 @@
 </body>
 
 <script>
+  function playStage() {
+    if (Math.random() < 0.5) {
+      return [0, 1];
+    }
+    return [1, 0];
+  }
+
   let n_players = 30;
   let players = [];
 
@@ -24,19 +31,19 @@
   }
 
   const t = new tournament.Tournament();
-  t.create(players);
-  t.addResultPoints(4, 2, 1);
+  t.create(players, true);
+
+  console.log(t);
 
   const tv = document.getElementById("tournament-viewer");
 
   window.addEventListener('WebComponentsReady', () => {
-    console.log(t);
-
     tv.setTournament(t);
   });
 
   tv.addEventListener("stage-clicked", function (ev) {
-    t.addResultPoints(ev.detail.stage, 2, 1);
+    let [p1, p2] = playStage();
+    t.addResultPoints(ev.detail.stage, p1, p2);
     tv.setTournament(t);
   });
 
