@@ -878,12 +878,12 @@ var tournament = (function (exports) {
 
                 if (stage.result == Result.Unfinished) {
 
-                    if (stage.player_2.is_bye) {
+                    if (stage.player_2 && stage.player_2.is_bye) {
                         this.addResultVictory(stage.num, Result.WinPlayer1);
                         continue;
                     }
 
-                    if (stage.player_1.is_bye) {
+                    if (stage.player_1 && stage.player_1.is_bye) {
                         this.addResultVictory(stage.num, Result.WinPlayer2);
                         continue;
                     }
@@ -1081,16 +1081,16 @@ var tournament = (function (exports) {
         getStage(stage_id) {
             let stage_num = stage_id;
             if (stage_id < this.bracket.n_stages) {
-                return this.bracket[stage_id];
+                return this.bracket.stages[stage_id];
             }
 
             stage_num -= this.bracket.n_stages;
 
             if (stage_num < this.looser_bracket.n_stages) {
-                return this.looser_bracket[stage_id];
+                return this.looser_bracket.stages[stage_id];
             }
 
-            return this.final_bracket[stage_id];
+            return this.final_bracket.stages[stage_id];
         }
     }
 
