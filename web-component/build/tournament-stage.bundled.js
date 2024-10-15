@@ -137,8 +137,8 @@ var it,st;class et extends g{constructor(){super(...arguments),this.renderOption
                 padding: 5px;
                 cursor: pointer;
             }
-        `]}static get properties(){return{stage:{type:Object}}}constructor(){super()}render(){if("function"!=typeof this.stage.hasPlayers){let t=new ht;Object.assign(t,this.stage),this.stage=t}console.log(this.stage);let t=this._getIsBye(this.stage.player_1)||this._getIsBye(this.stage.player_2),i="grey",s="grey";return this.stage.hasPlayers()&&(i="blue",s="blue"),this.stage.result==rt&&(i="green",s="red"),this.stage.result==lt&&(i="red",s="green"),z`
-            <div class="t-row ${t?"t-hide":""}">
+        `]}static get properties(){return{stage:{type:Object}}}constructor(){super()}render(){if("function"!=typeof this.stage.hasPlayers){let t=new ht;Object.assign(t,this.stage),this.stage=t}let t=this._getIsBye(this.stage.player_1)||this._getIsBye(this.stage.player_2),i="grey",s="grey";return this.stage.hasPlayers()&&(i="blue",s="blue"),this.stage.result==rt&&(i="green",s="red"),this.stage.result==lt&&(i="red",s="green"),z`
+            <div class="stage-${this.stage.id} t-row ${t?"t-hide":""}">
                 <div class="stage-players t-column" @click="${t=>this._onClick("view-stage")}">
                     <div class="t-row p-row">
                         <div class="p-color-band p-color-band-top p-${i}"></div>
@@ -159,4 +159,4 @@ var it,st;class et extends g{constructor(){super(...arguments),this.renderOption
         `}_printNextStage(){return z`
             <div class="next-stage-button" @click="${t=>this._onClick("next-stage")}">
                 >
-            </div>`}_onClick(t){if(!this.stage.hasPlayers())return;let i=new CustomEvent("stage-clicked",{bubbles:!0,composed:!0,detail:{position:t,stage:this.stage.id}});console.log(i),this.dispatchEvent(i)}_getName(t){return t?t.name:""}_getIsBye(t){return!!t&&t.is_bye}}window.customElements.define("tournament-stage",dt);export{dt as TournamentStage};
+            </div>`}_onClick(t){if(!this.stage.hasPlayers())return;let i=new CustomEvent("stage-clicked",{bubbles:!0,composed:!0,detail:{position:t,stage:this.stage.id}});this.dispatchEvent(i)}_getName(t){return t?t.name:""}_getIsBye(t){return!!t&&t.is_bye}}window.customElements.define("tournament-stage",dt);export{dt as TournamentStage};
