@@ -13,7 +13,7 @@ async function playStage(stage) {
 }
 
 async function run() {
-    let n_players = 14;
+    let n_players = 36;
     let players = [];
 
     for (let i = 0; i < n_players; i++) {
@@ -21,6 +21,10 @@ async function run() {
     }
 
     const t = new Tournament();
+
+    let maps = [...Array(26).keys()].map(i => String.fromCharCode(i + 97));
+    t.assignUniqueToColumnStages("maps", maps, 3);
+
     t.create(players);
 
     console.log(t.players);
@@ -28,10 +32,6 @@ async function run() {
 
     t.bracket.consolePrint();
     t.bracket.validate();
-
-    let maps = [...Array(26).keys()].map(i => String.fromCharCode(i + 97));
-
-    t.assignUniqueToColumnStages("maps", maps, 3);
 
     while (t.hasNextStage()) {
         let next_stage = t.getNextStage();

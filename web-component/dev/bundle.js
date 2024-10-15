@@ -471,6 +471,9 @@ var tournament = (function (exports) {
                 else if (stage.result == Result.WinPlayer2) {
                     loosers.push(stage.player_1);
                 }
+                else {
+                    loosers.push(null);
+                }
             }
 
             return loosers;
@@ -677,16 +680,17 @@ var tournament = (function (exports) {
         }
 
         _updateFirstNonExecutedStage() {
+            console.log("updating");
             let assigned = false;
             for (let stage of this.stages) {
                 if (stage.result == Result.Unfinished) {
 
-                    if (stage.player_2 && stage.player_2.is_bye) {
+                    if (stage.player_2 && stage.player_2.is_bye && stage.player_1) {
                         this.addResultVictory(stage.num, Result.WinPlayer1);
                         continue;
                     }
 
-                    if (stage.player_1 && stage.player_1.is_bye) {
+                    if (stage.player_1 && stage.player_1.is_bye && stage.player_2) {
                         this.addResultVictory(stage.num, Result.WinPlayer2);
                         continue;
                     }
@@ -701,6 +705,11 @@ var tournament = (function (exports) {
             if (!assigned) {
                 this.finished = true;
             }
+        }
+
+        update() {
+            console.log("Updated");
+            this._updateFirstNonExecutedStage();
         }
 
         getNextStage() {
@@ -740,6 +749,8 @@ var tournament = (function (exports) {
             let winner_player = Result.WinPlayer1 == result ? stage.player_1 : stage.player_2;
 
             if (stage.hasNext()) {
+
+                console.log("added winner", winner_player);
                 let next_stage_winner = this.stages[stage.next_winner];
                 if (next_stage_winner.previous_up == stage_num) {
                     next_stage_winner.player_1 = winner_player;
@@ -962,7 +973,8 @@ var tournament = (function (exports) {
         }
 
         _createNextBracketIfNeeded() {
-            if (this.has_looser_bracket && this.looser_bracket == null) {
+            if (this.has_looser_bracket && !this.looser_bracket) {
+                console.log("Creating loosers bracket");
                 this.looser_bracket = new LooserBracket(this.bracket.n_players - 1, this.bracket.n_stages);
                 for (let assign of this.assignations) {
                     assign.list.splice(0, assign.number);
@@ -975,7 +987,7 @@ var tournament = (function (exports) {
                 this.looser_bracket._assignPlayers(looser_players);
             }
 
-            if (this.looser_bracket != null && this.looser_bracket.finished && this.final_bracket == null) {
+            if (this.looser_bracket != null && this.looser_bracket.finished && !this.final_bracket) {
                 let final_bracket_players = [this.bracket.getWinner(), this.looser_bracket.getWinner()];
                 this.final_bracket = new FinalBracket(final_bracket_players, this.bracket.n_stages + this.looser_bracket.n_stages);
                 for (let assign of this.assignations) {
@@ -1003,7 +1015,7 @@ var tournament = (function (exports) {
 
         assignUniqueToColumnStages(name, list, number) {
             if (this.bracket != null) {
-                throw Error("This should be called before create");
+                throw Error("assignUniqueToColumnStages should be called before create");
             }
 
             this.assignations.push({ name, list, number });
@@ -1037,6 +1049,7 @@ var tournament = (function (exports) {
             if (stage_id < this.bracket.n_stages) {
                 this.bracket.addResultPoints(stage_num, points_player_1, points_player_2);
                 this._createNextBracketIfNeeded();
+                this.looser_bracket.update();
                 return;
             }
 
@@ -1060,6 +1073,7 @@ var tournament = (function (exports) {
             if (stage_num < this.bracket.n_stages) {
                 this.bracket.addResultVictory(stage_num, result);
                 this._createNextBracketIfNeeded();
+                this.looser_bracket.update();
                 return;
             }
 

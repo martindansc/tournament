@@ -151,7 +151,7 @@ var it,st;class et extends f{constructor(){super(...arguments),this.renderOption
                         <div class="p-score pt-${s}">${this.stage.player_2_score}</div>
                     </div>
                 </div>
-                ${this.stage.hasNext()?this._printNextStage():""}
+                ${this._printNextStage()}
                 <div class="arrow-parent">
                     <div class="back-line" style="">
                 </div>
@@ -174,7 +174,7 @@ var it,st;class et extends f{constructor(){super(...arguments),this.renderOption
     <div class="t-row gap-5">
       ${this._print_columns(this.t.bracket)}
     </div>`),null!=this.t.looser_bracket&&t.push(z`
-      <div class="bracket-title">Looser bracket</div>
+      <div class="bracket-title">Loser bracket</div>
       <div class="t-row gap-5">${this._print_columns(this.t.looser_bracket)}
       </div>`),null!=this.t.final_bracket&&t.push(z`
       <div class="bracket-title">Final bracket</div>
