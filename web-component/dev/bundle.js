@@ -680,7 +680,6 @@ var tournament = (function (exports) {
         }
 
         _updateFirstNonExecutedStage() {
-            console.log("updating");
             let assigned = false;
             for (let stage of this.stages) {
                 if (stage.result == Result.Unfinished) {
@@ -695,7 +694,7 @@ var tournament = (function (exports) {
                         continue;
                     }
 
-                    if (!assigned) {
+                    if (!assigned && stage.player_1 && stage.player_2) {
                         assigned = true;
                         this.first_non_executed_stage = stage.num;
                     }
@@ -708,7 +707,6 @@ var tournament = (function (exports) {
         }
 
         update() {
-            console.log("Updated");
             this._updateFirstNonExecutedStage();
         }
 
@@ -749,8 +747,6 @@ var tournament = (function (exports) {
             let winner_player = Result.WinPlayer1 == result ? stage.player_1 : stage.player_2;
 
             if (stage.hasNext()) {
-
-                console.log("added winner", winner_player);
                 let next_stage_winner = this.stages[stage.next_winner];
                 if (next_stage_winner.previous_up == stage_num) {
                     next_stage_winner.player_1 = winner_player;
@@ -987,7 +983,7 @@ var tournament = (function (exports) {
                 this.looser_bracket._assignPlayers(looser_players);
             }
 
-            if (this.looser_bracket != null && this.looser_bracket.finished && !this.final_bracket) {
+            if (this.bracket.finished && this.looser_bracket != null && this.looser_bracket.finished && !this.final_bracket) {
                 let final_bracket_players = [this.bracket.getWinner(), this.looser_bracket.getWinner()];
                 this.final_bracket = new FinalBracket(final_bracket_players, this.bracket.n_stages + this.looser_bracket.n_stages);
                 for (let assign of this.assignations) {
